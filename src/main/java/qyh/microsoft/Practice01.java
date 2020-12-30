@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * from https://www.jianshu.com/p/62fc0bdeb71d
+ *      https://www.jianshu.com/p/6db5e1ae81d1
  * 输入一棵二元查找树，将该二元查找树转换成一个排序的双向链表。
  */
 public class Practice01 {
