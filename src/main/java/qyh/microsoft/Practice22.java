@@ -9,7 +9,7 @@ public class Practice22 {
 
     }
 
-    public static void linkStrings(String[] strings) {
+    public static void linkStrings(String[] strings, int m) {
 
     }
 }
