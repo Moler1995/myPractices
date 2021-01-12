@@ -1,7 +1,5 @@
 package qyh.dp;
 
-import java.util.Arrays;
-
 public class Package01 {
     public static void main(String[] args) {
         int capacity = 4;
