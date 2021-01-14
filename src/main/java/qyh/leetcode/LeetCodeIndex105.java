@@ -17,34 +17,33 @@ public class LeetCodeIndex105 {
     public static void main(String[] args) {
         int[] pre = {1, 2};
         int[] in = {1, 2};
-        TreeNode root = buildTree(pre, in, 0, pre.length - 1);
+        TreeNode root = buildTree(pre, in, 0, pre.length - 1, 0, pre.length - 1);
         System.out.println(root);
     }
 
-    private static TreeNode buildTree(int[] preOrder, int[] inOrder, int start, int end) {
-        if (start >= preOrder.length || end >=  preOrder.length) {
+    private static TreeNode buildTree(int[] preOrder, int[] inOrder, int startPre, int endPre,
+                                      int startIn, int endIn) {
+        if (startPre > endPre) {
             return null;
         }
-        TreeNode node = new TreeNode(preOrder[start]);
-        if (start == end) {
-            return node;
+        TreeNode root = new TreeNode(preOrder[startPre]);
+        if (startPre == endPre) {
+            return root;
         }
-        int index = findIndex(inOrder, preOrder[start]);
-        if (index > 0) {
-            int leftEnd = inOrder[index - 1];
-            int left = findIndex(preOrder, leftEnd);
-            node.left = buildTree(preOrder, inOrder, start + 1, left);
+        int rootIndexIn = findIndex(inOrder, preOrder[startPre], startIn, endIn);
+        int leftLen = rootIndexIn - startIn;
+        int rightLen = endIn - rootIndexIn;
+        if (leftLen > 0) {
+            root.left = buildTree(preOrder, inOrder, startPre + 1, startPre + leftLen, startIn, rootIndexIn - 1);
         }
-        if (index < preOrder.length - 1) {
-            int rightStart = inOrder[index + 1];
-            int right = findIndex(preOrder, rightStart);
-            node.right = buildTree(preOrder, inOrder, right, end);
+        if (rightLen > 0) {
+            root.right = buildTree(preOrder, inOrder, startPre + leftLen + 1, endPre, rootIndexIn + 1, endIn);
         }
-        return node;
+        return root;
     }
 
-    private static int findIndex(int[] input, int target) {
-        for (int i = 0; i < input.length; i++) {
+    private static int findIndex(int[] input, int target, int start, int end) {
+        for (int i = start; i <= end; i++) {
             if (input[i] == target) {
                 return i;
             }
