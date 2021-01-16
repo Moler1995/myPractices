@@ -1,7 +1,5 @@
 package qyh.leetcode;
 
-import java.util.Stack;
-
 /**
  * 给你一个字符串s和一个字符规律p，请你来实现一个支持 '.'和'*'的正则表达式匹配。
  *
@@ -51,37 +49,15 @@ public class LeetCodeIndex10 {
     }
 
     private static boolean isMatched(String s, String p) {
-        if (s == null || p == null) return false;
-
-        int m = s.length(), n = p.length();
-        boolean[][] dp = new boolean[m + 1][n + 1];
-        dp[0][0] = true;
-
-        //"" 和p的匹配关系初始化，a*a*a*a*a*这种能够匹配空串，其他的是都是false。
-        //  奇数位不管什么字符都是false，偶数位为* 时则: dp[0][i] = dp[0][i - 2]
-        for (int i = 2; i <= n; i+= 2) {
-            if (p.charAt(i - 1) == '*') {
-                dp[0][i] = dp[0][i - 2];
-            }
-        }
-
-        for (int i = 1; i <= m; i++) {
-            for (int j = 1; j <= n; j++) {
-                char sc = s.charAt(i - 1);
-                char pc = p.charAt(j - 1);
-                if (sc == pc || pc == '.') {
-                    dp[i][j] = dp[i - 1][j - 1];
-                } else if (pc == '*') {
-                    if (dp[i][j - 2]) {
-                        dp[i][j] = true;
-                    } else if (sc == p.charAt(j - 2) || p.charAt(j - 2) == '.') {
-                        dp[i][j] = dp[i - 1][j];
-                    }
-                }
-            }
-        }
-
-        return dp[m][n];
+        /*
+         *        a b * a * c * a
+         *      0 1 2 3 4 5 6 7 8
+         *   0  t f f f f f f f f
+         * a 1  f t f t f t f t f
+         * a 2  f f f f t t f t t
+         * a 3  f f f f f t f t t
+         */
+        return false;
 
     }
 }
