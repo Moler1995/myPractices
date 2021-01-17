@@ -1,4 +1,4 @@
-package qyh.leetcode;
+package qyh.leetcode.midium;
 
 /**
  * 第79题

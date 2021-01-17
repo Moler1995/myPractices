@@ -1,4 +1,4 @@
-package qyh.leetcode;
+package qyh.leetcode.midium;
 
 /**
  * 最长湍流子数组

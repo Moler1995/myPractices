@@ -1,4 +1,4 @@
-package qyh.leetcode;
+package qyh.leetcode.hard;
 
 /**
  * 给定一个字符串 S，找出 S 中不同的非空回文子序列个数，并返回该数字与 10^9 + 7 的模。
