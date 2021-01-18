@@ -1,15 +1,28 @@
 package qyh.leetcode.midium;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeetCodeIndex721UFDS {
     private static Map<Account, Account> parent = new HashMap<>();
     private static Map<Account, Integer> rank = new HashMap<>();
     public static void main(String[] args) {
-
+        List<List<String>> accounts = new ArrayList<>();
+        List<String> acc1 = Arrays.asList("David","David0@m.co","David1@m.co");
+        accounts.add(acc1);
+        List<String> acc2 = Arrays.asList("David","David3@m.co","David4@m.co");
+        accounts.add(acc2);
+        List<String> acc3 = Arrays.asList("David","David4@m.co","David5@m.co");
+        accounts.add(acc3);
+        List<String> acc4 = Arrays.asList("David","David2@m.co","David3@m.co");
+        accounts.add(acc4);
+        List<String> acc5 = Arrays.asList("David","David1@m.co","David2@m.co");
+        accounts.add(acc5);
+        System.out.println(accountsMerge(accounts));
     }
 
     public static List<List<String>> accountsMerge(List<List<String>> accounts) {
+        List<Account> allCounts = new ArrayList<>();
         for (List<String> account : accounts) {
             String name = account.get(0);
             Account account1 = new Account(name, new HashSet<>());
@@ -19,23 +32,43 @@ public class LeetCodeIndex721UFDS {
             // 初始化
             parent.put(account1, account1);
             rank.put(account1, 1);
+            for (Account preserved : allCounts) {
+                union(preserved, account1);
+            }
+            allCounts.add(account1);
         }
-        return null;
+        Map<Account, Set<String>> map = new HashMap<>();
+        for (Account preserved : allCounts) {
+            Account root = find(preserved);
+            if (!map.containsKey(root)) {
+                Set<String> emails = new HashSet<>();
+                emails.add(root.name);
+                emails.addAll(preserved.emails);
+                map.put(root, emails);
+            } else {
+                map.get(root).addAll(preserved.emails);
+            }
+        }
+        List<List<String>> result = new ArrayList<>();
+        for (Map.Entry<Account, Set<String>> entry : map.entrySet()) {
+            result.add(entry.getValue().stream().sorted().collect(Collectors.toList()));
+        }
+        return result;
     }
 
     public static Account find(Account account) {
         if (parent.get(account).equals(account)) {
             return account;
         } else {
-            Account root = find(account);
+            Account root = find(parent.get(account));
             parent.put(account, root);
             return root;
         }
     }
 
     public static void union(Account account1, Account account2) {
-        Account root1 = find(account1);
-        Account root2 = find(account2);
+        Account root1 = find(account1); // [3, 4]
+        Account root2 = find(account2); // [2, 3]
         if (!account1.hasSameEmail(account2)) {
             return;
         }
