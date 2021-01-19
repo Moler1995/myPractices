@@ -46,40 +46,22 @@ public class LeetCodeIndex1584Prim {
             }
         }
         Set<Integer> connected = new HashSet<>();
-        Set<Integer> isolated = new HashSet<>();
         int min = 0;
-        int mindis = inf;
-        int minIndex = -1;
-        // 第一条与0点相连的最短边
-        for (int j = 1; j < points.length; j++) {
-            int dis = Math.abs(points[j][0] - points[0][0]) + Math.abs(points[j][1] - points[0][1]);
-            isolated.add(j);
-            if (mindis > dis) {
-                mindis = dis;
-                minIndex = j;
-            }
-        }
-        min += mindis;
-        connected.add(minIndex);
-        isolated.remove(minIndex);
         connected.add(0);
-        for (int i = 2; i < points.length; i++) {
-            mindis = inf;
-            minIndex = -1;
+        for (int i = 1; i < points.length; i++) {
+            int mindis = inf;
+            int minIndex = -1;
             for (int connectedNode : connected) {
-                for (int isolateNode : isolated) {
-                    int dis = Math.abs(points[connectedNode][0] - points[isolateNode][0])
-                            + Math.abs(points[connectedNode][1] - points[isolateNode][1]);
-                    if (mindis > dis) {
-                        mindis = dis;
-                        minIndex = isolateNode;
-                    }
+                int nearNeighbor = neighbor.get(connectedNode);
+                if (graph[connectedNode][nearNeighbor] < mindis) {
+                    mindis = graph[connectedNode][nearNeighbor];
+                    minIndex = nearNeighbor;
                 }
             }
             if (minIndex > -1) {
                 min += mindis;
                 connected.add(minIndex);
-                isolated.remove(minIndex);
+                updateNeighbor(neighbor, minIndex, connected, graph);
             }
         }
 
@@ -101,5 +83,17 @@ public class LeetCodeIndex1584Prim {
                 neighbor.put(j, i);
             }
         }
+    }
+
+    private static void updateNeighbor(Map<Integer, Integer> neighbor, int i , Set<Integer> connected, int[][] graph) {
+        int min = Integer.MAX_VALUE / 2;
+        int minIndex = -1;
+        for (int index = 0; index < graph.length; index++) {
+            if (!connected.contains(index) && graph[i][index] < min) {
+                minIndex = index;
+                min = graph[i][index];
+            }
+        }
+        neighbor.put(i, minIndex);
     }
 }
