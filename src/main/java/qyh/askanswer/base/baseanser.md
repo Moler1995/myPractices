@@ -294,4 +294,39 @@ session是服务器端存储的用户信息，在会话中用于对不同用户�
 6. 框架：Spring可以整合其他组件和配置组成一个复杂的应用。
 7. Spring MVC：客户端请求发送到服务器后，由DispatcherServlet负责查找HandlerMapping获得对应的处理器，调用处理器
    得到处理器返回的结果生成ModelAnView，后交给视图处理器处理得到对应的视图后将response返回给用户。
-###10.2    
+###10.2 解释一下什么是 aop？
+AOP是面向切面编程，是OOP的延续。AOP是Spring的一大特色，它能够将业务中的核心逻辑与如进出口日志，事务管理等周边逻辑解耦，降低代码复杂度。
+实现方式是动态代理。
+###10.3 解释一下什么是 ioc？
+IOC Inversion of Control 控制反转，Spring中的IOC是指在服务启动时实例化并管理所有的bean对象的声明周期，在需要依赖时自动注入。
+###10.4 spring 有哪些主要模块？
+不会
+答案：
+1. Spring AOP 面向切面
+2. Spring ORM Hibernate、Mybatis、JDO 对象关系映射
+3. Spring Core IOC、bean工厂
+4. Spring Dao JDBC 规范应用程序与数据库如何访问的程序接口
+5. Spring Context 提供了关于UI的支持
+6. Spring Web 提供web支持
+7. Spring MVC 提供webmvc，javax，jsp支持
+###10.5 spring 常用的注入方式有哪些？
+不会
+答案：
+1. 构造方法注入，service这个bean的构造方法中有一个入参类型是Constructor，constructor这个bean通过constructor-arg这个标签传参到service的有参构造方法中，完成bean的注入
+注册
+<bean id="service" class="a.b.c.Service"><constructor-arg ref="constructor"></constructor-arg></bean>
+<bean id="constructor" class="a.b.c.Constructor></bean>
+2. setter注入 property标签默认会根据name属性值拼接成set方法(对应set中的setCons(Constructor constructor)方法)，注入已经注入的constructor对象。
+<bean id="service" class="a.b.c.Service"><property name="cons" ref="constructor"></property></bean>
+<bean id="constructor" class="a.b.c.Constructor></bean>
+3. 注解注入
+@Controller @Component @Service...注册bean
+@Autowired @Resource
+###10.6 spring 中的 bean 是线程安全的吗？
+bean根据作用域默认是单例模式，如果bean存在状态，即类似于类变量的情况则不是线程安全的，
+如果想得到线程安全的bean需要将其作用域改为prototype，这样每次注入的时候都会new一个新的对象出来
+request：每次请求创建一个新的bean
+session：每次会话创建一个新的bean
+global-session：所有会话共享一个bean
+
+
