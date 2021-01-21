@@ -328,5 +328,48 @@ bean根据作用域默认是单例模式，如果bean存在状态，即类似于
 request：每次请求创建一个新的bean
 session：每次会话创建一个新的bean
 global-session：所有会话共享一个bean
+###10.7 spring 支持几种 bean 的作用域？
+1. prototype 每次需要依赖bean时都会重新创建一个新的对象
+2. singleton 每次获取到的bean对象都是同一个对象，不会创建新的bean对象
+3. request   用户每次请求会创建一个新的bean对象
+4. session   服务器与用户的每次会话会创建一个新的bean对象
+5. global-session 所有会话共享同一个bean
+###10.8 spring 自动装配 bean 有哪些方式？
+1. no 默认值，表示没有自动装配，需要使用显示的bean引用
+1. byName 根据bean名称 @Resources默认
+2. byType 根据要加载的bean的类型 @Autowired默认
+3. autodetect 首先通过构造函数使用autowired，如果不能则通过byType装配
+###10.9 spring 事务实现方式有哪些？
+1. 编程式事务，通过java.sql.Connection，设置不提交事务，在执行成功之后调用commit()手动提交事务，在失败之后手动执行rollback()回滚
+2. 声明式事务，
+    2.1. 添加DataSourceTransactionManager事务管理器和事务代理类TransactionProxyFactoryBean 
+    2.2. @Transactional注解声明事务，定义rollbackFor = ....
+    2.3 基于AOP和事务管理器，配置和织入切面，在目标方法执行前后执行事务逻辑
+###10.10 说一下 spring 的事务隔离？
+不会
+答案：
+1. @Transactional(propagation=Propagation.REQUIRED)，如果有事务就新添加一条事务，没有就新增一个
+2. @Transactional(propagation=Propagation.NOT_SUPPORT)，以非事务形式运行，如果存在当前事务，就把当前事务挂起
+3. @Transactional(propagation=Propagation.REQUIRES_NEW)，不管是否存在事务直接新建一个事务
+4. @Transactional(propagation=Propagation.MANDATORY)，必须等一个事务执行完毕，否则
+5. @Transactional(propagation=Propagation.NEVER)，以非事务的方式执行，如果存在事务则抛出异常
+6. @Transactional(propagation=Propagation.PROPAGATION_NESTED)，嵌套事务
+###10.11 说一下 spring mvc 运行流程？
+服务器接收到用户请求后交给DispatcherServlet，DispatcherServlet根据HandlerMapping查询到对应的处理器Handler并调用HandlerAdapter提取处理Handler入参，
+Controller处理完结果后生成ModelAndView交还DispatcherServlet，DispatcherServlet调用ViewResolver处理和渲染数据后返回给用户。
+###10.12 spring mvc 有哪些组件？ 
+1. DispatcherServlet 请求分发
+2. Controller        业务处理器
+3. HandlerMapping    处理器映射
+4. HandlerAdapter    处理器适配
+5. HandlerInterceptor 拦截组件
+6. ViewResolver      视图处理组件
+7. View              视图组件
+8. DataBinder        数据转换
+9. HttpMessageConverter 消息转换组件
+###10.13 @RequestMapping 的作用是什么？
+创建方法或者类与url请求的映射关系，定义请求的方式，入参映射
 
+
+ 
 
