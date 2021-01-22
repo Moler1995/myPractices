@@ -369,6 +369,52 @@ Controller处理完结果后生成ModelAndView交还DispatcherServlet，Dispatch
 9. HttpMessageConverter 消息转换组件
 ###10.13 @RequestMapping 的作用是什么？
 创建方法或者类与url请求的映射关系，定义请求的方式，入参映射
+###10.14 @Autowired 的作用是什么？
+实现bean自动装配
+#11 Spring Boot/Spring Cloud
+###11.1 什么是 spring boot？
+不会
+Spring Boot是一个框架，简化了Spring众多框架中复杂的配置，SpringBoot是一个服务于框架的框架，服务范围是简化配置文件。
+###11.2 为什么要用 spring boot？
+1. Spring Boot简化了复杂的Spring框架配置，实现了自动化配置，不需要配置很多xml
+2. 基于Spring构建，可以集成各式各样的框架
+3. SpringBoot不依赖于容器，可以独立运行
+4. 内置tomcat，可以直接放到tomcat中运行
+###11.3 spring boot 核心配置文件是什么？
+application.properties/bootstrap.properties
+###11.4 spring boot 配置文件有哪几种类型？它们有什么区别？
+.properties和.yml
+properties是用key=value的形式
+yml用的key:value的形式
+yml格式不支持@PropertySource注解导入配置
+###11.5 spring boot 有哪些方式可以实现热部署？
+1. Spring Loaded
+2. spring-boot-devtools
+3. JRebel插件
+###11.6 jpa 和 hibernate 有什么区别？
+JPA是一个规范：JPA目标是标准化JAVA应用程序如何执行ORM
+Hibernate是一个实现了JPA规范的ORM框架，
+JPA通过JDK.5注解或者XML描述对象-关系表的映射关系，并将运行期的实体对象持久化到数据库中
+作用：我们在编程时只需要针对JPA规范类编写，在运行时用Hibernate真正执行持久化工作。
+###11.7 什么是 spring cloud？
+* Spring Cloud是一个微服务框架，提供一整套微服务分布式系统解决方案
+* Spring Cloud对Netflix的微服务框架进行了组装，同时又实现了和云端平台及和SpringBoot开发框架的集成。
+* Spring Cloud涉及配置管理，服务治理，熔断机制，智能路由，微代理，控制总线(bus)，一次性token，全局一致性锁，leader选举，
+  分布式session，集群状态。
+* Spring Cloud提供了一种快速构建分布式微服务的工具。
+###11.8 spring cloud 断路器的作用是什么？
+在一个微服务出现拥堵或异常的时候，仍能给客户端一个合理的异常返回，防止发生服务雪崩。
+###11.9 spring cloud 的核心组件有哪些？
+1. Eureka服务注册中心，提供了一个基于rest的服务治理组件，包括服务注册中心，服务注册与发现机制，实现了云端负载均衡和中间层服务器的转移。
+2. Hystrix实现断路器模式，通过控制服务器节点，对延迟和故障提供更大的容错能力。
+3. Ribbon客户端负载均衡
+4. Feign基于Hystrix与Ribbon的声明式服务间调用
+5. Zuul微服务网关，提供动态路由，访问过滤，统一认证等服务，易于监控，易于认证
+6. Config配置管理工具，支持应用配置的外部化存储，如git，实现动态配置
+7. Bus事件，消息总线，用于在集群中传播状态变化。
+8. Consul服务发现与配置
+
+
 
 
  
