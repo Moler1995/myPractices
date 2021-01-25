@@ -276,7 +276,7 @@ session是服务器端存储的用户信息，在会话中用于对不同用户�
      4. 适配器模式，将某些类转换为统一的格式时或字段。
      5. 观察者模式，
      6. 监听模式
-     7. 代理模式，
+     7. 代理模式，Hibernate延迟加载
      8. 建造者模式，
 ###9.2 简单工厂和抽象工厂有什么区别？
 简单工厂，实体类对象都是由工厂创建，不符合开闭原则，被创建的对象可能会由多种属性。这样就要修改
@@ -420,13 +420,36 @@ Hibernate支持多种关系型数据库
 Hibernate有一个对数据库crud地基础类HibernateTemplate，通过继承它进行特定表的增删改查
 Hibernate支持事务管理
 ###12.2 什么是 ORM 框架？
+不会
 ORM (Object Relational Mapping)对象关系映射，支持对象与数据库字段的映射，方便对象在不同系统之间的数据的转换。
 ##12.3 hibernate 中如何在控制台查看打印的 sql 语句？
+不会
 Spring中可以配置application.properties里
 spring.jpa.properties.hibernate.show_sql=true  
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.use_sql_comments=true
 ###12.4 hibernate 有几种查询方式？
-1. 通过HibernateTemplate封装的查询语句进行查询
+不会
+1. 使用QBC进行查询
 2. 通过编写HQL进行查询
-3. 通过自己编写SQL进行查询
+3. 通过自己编写SQL进行查询NativeSQL
+###12.5 hibernate 实体类可以被定义为 final 吗？
+不会
+可以，但由于Hibernate会使用代理模式再延迟关联情况下提高性能，如果定义为final类，则不能使用代理，限制了性能的提升
+###12.6 在 hibernate 中使用 Integer 和 int 做映射有什么区别？
+查询字段如果是Integer，当没有值时会返回null，如果是int，在该字段没有值时(返回0  错)会报错。
+###12.7 hibernate 是如何工作的？
+不会
+1. 读取解析配置文件hibernate.cfg.xml建立表和映射关系
+2. 实例化Configuration对象建立sessionFactory实例后建立session
+3. 打开session，创建事务
+4. 进行持久化操作
+5. 提交事务
+6. 关闭session
+7. 关闭sessionFactory
+###12.8 get()和 load()的区别？
+不会
+1. get()使用ID查询，会返回一个User对象
+   load()延迟加载，当调用时只会返回一个代理对象，代理对象中只存储了ID值，只有当调用ID值意外的属性时才会发出查询语句
+2. get()和load()都会缓存，当查询不到时，get返回的时null，load返回的时代理对象   
+
