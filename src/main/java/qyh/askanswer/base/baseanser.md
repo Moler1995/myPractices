@@ -422,7 +422,7 @@ Hibernate支持事务管理
 ###12.2 什么是 ORM 框架？
 不会
 ORM (Object Relational Mapping)对象关系映射，支持对象与数据库字段的映射，方便对象在不同系统之间的数据的转换。
-##12.3 hibernate 中如何在控制台查看打印的 sql 语句？
+###12.3 hibernate 中如何在控制台查看打印的 sql 语句？
 不会
 Spring中可以配置application.properties里
 spring.jpa.properties.hibernate.show_sql=true  
