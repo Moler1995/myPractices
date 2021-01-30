@@ -20,11 +20,12 @@ import java.util.TreeSet;
  */
 public class LeetCodeIndex1631 {
     public static void main(String[] args) {
-
+        int[][] heights = {{1,10,6,7,9,10,4,9}};
+        System.out.println(minimumEffortPath(heights));
     }
 
     public static int minimumEffortPath(int[][] heights) {
-        if (heights.length == 0) {
+        if (heights.length == 0 || heights[0].length == 0 || (heights.length == 1 && heights[0].length == 1)) {
             return 0;
         }
         Set<Edge> edgeTreeSet = new TreeSet<>((e1, e2) -> {
@@ -36,7 +37,32 @@ public class LeetCodeIndex1631 {
                 return e1.to - e2.to;
             }
         });
-        return 0;
+        int rows = heights.length;
+        int columns = heights[0].length;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                int from = columns * i + j;
+                int to1 = columns * i + j + 1;
+                int to2 = columns * (i + 1) + j;
+
+                if (j + 1 < columns) {
+                    Edge edge1 = new Edge(from, to1, Math.abs(heights[i][j + 1] - heights[i][j]));
+                    edgeTreeSet.add(edge1);
+                }
+                if (i + 1 < rows) {
+                    Edge edge2 = new Edge(from, to2, Math.abs(heights[i + 1][j] - heights[i][j]));
+                    edgeTreeSet.add(edge2);
+                }
+            }
+        }
+        UFDS ufds = new UFDS(rows * columns);
+        for (Edge edge : edgeTreeSet) {
+            ufds.union(edge.from, edge.to);
+            if (ufds.find(0) == ufds.find(rows * columns - 1)) {
+                return edge.len;
+            }
+        }
+        return -1;
     }
 
     private static class UFDS {
@@ -62,11 +88,11 @@ public class LeetCodeIndex1631 {
             }
         }
 
-        public boolean union(int x, int y) {
+        public void union(int x, int y) {
             int rootx = find(x);
             int rooty = find(y);
             if (rootx == rooty) {
-                return false;
+                return;
             }
             if (rank[rootx] >= rank[rooty]) {
                 parent[rooty] = rootx;
@@ -76,7 +102,6 @@ public class LeetCodeIndex1631 {
             if (rank[rootx] == rank[rooty]) {
                 rank[rootx]++;
             }
-            return true;
         }
     }
 
@@ -89,6 +114,15 @@ public class LeetCodeIndex1631 {
             this.from = from;
             this.to = to;
             this.len = len;
+        }
+
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Edge) {
+                return ((Edge) obj).from == this.from && ((Edge) obj).to == this.to && ((Edge) obj).len == this.len;
+            }
+            return false;
         }
     }
 }
