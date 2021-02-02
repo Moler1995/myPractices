@@ -57,9 +57,26 @@ public class LeetCodeIndex146 {
                 head.next = newNode;
                 tail.prev = newNode;
             } else if (currElementCount < capacity) {
-
+                Node newNode;
+                if (map.containsKey(key)) {
+                    map.get(key).value = value;
+                    newNode = map.get(key);
+                    newNode.prev.next = newNode.next;
+                    newNode.next.prev = newNode.prev;
+                } else {
+                    newNode = new Node(key, value, null, null);
+                    currElementCount++;
+                }
+                head.next.prev = newNode;
+                newNode.next = head.next;
+                newNode.prev = head;
+                head.next = newNode;
             } else {
-
+                Node newNode;
+                if (map.containsKey(key)) {
+                    newNode = map.get(key);
+                    newNode.value = value;
+                }
             }
         }
     }
