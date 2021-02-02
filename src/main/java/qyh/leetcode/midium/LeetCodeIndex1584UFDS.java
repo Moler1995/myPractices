@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * udfs
  */
-public class LeetCodeIndex1584UDFS {
+public class LeetCodeIndex1584UFDS {
     public static void main(String[] args) {
         int[][] points = {{0,0},{2,2},{3,10},{5,2},{7,0}};
         System.out.println(minCostConnectPoints(points));

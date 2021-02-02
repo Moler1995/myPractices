@@ -468,6 +468,19 @@ spring.jpa.properties.hibernate.use_sql_comments=true
 2. 用sql的分页语句，limit
 3. 使用拦截器，拦截mybatis接口方法，
 4. 使用PageHelper
+###13.3 RowBounds 是一次性查询全部结果吗？为什么？
+不会
+RowBounds时mybatis用于分页的对象，可以动态构造sql语句，效率较高，不需要全部查询出来。
+###13.4 mybatis 逻辑分页和物理分页的区别是什么？
+不会
+逻辑分页是先查询，然后使用代码去取需要的部分；
+物理分页时利用sql自带的limit实现。
+###13.5 mybatis 是否支持延迟加载？延迟加载的原理是什么？
+支持
+mybatis支持一对一和一对多查询，在mybatis配置文件中可以配置是否启用延迟加载，
+原理是使用cglib创建目标对象的代理对象，当调用目标方法时，进入拦截器方法，当查询到null值时，会单独发送关联的sql语句进行查询。
+###13.6 说一下 mybatis 的一级缓存和二级缓存？
+
 #17 数据库
 ###17.1 数据库的三范式是什么？
 1NF: 表的每一列都是不可分割的
