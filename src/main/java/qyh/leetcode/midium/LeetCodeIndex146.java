@@ -24,12 +24,12 @@ import java.util.Map;
  */
 public class LeetCodeIndex146 {
     public static void main(String[] args) {
-        LRUCache lruCache = new LRUCache(1);
+        LRUCache lruCache = new LRUCache(2);
         lruCache.put(1, 1);
         lruCache.put(2, 2);
         lruCache.put(3, 3);
         lruCache.put(2, 3);
-        System.out.println(lruCache.get(1));
+        System.out.println(lruCache.get(3));
     }
 
     private static class LRUCache {
@@ -44,40 +44,68 @@ public class LeetCodeIndex146 {
             this.currElementCount = 0;
             this.head = new Node();
             this.tail = new Node();
+            head.next = tail;
+            tail.prev = head;
         }
 
         public int get(int key) {
-
+            if (map.containsKey(key)) {
+                Node newNode = map.get(key);
+                moveToHead(newNode);
+                return newNode.value;
+            }
             return -1;
         }
 
         public void put(int key, int value) {
+            Node newNode;
             if (currElementCount == 0) {
-                Node newNode = new Node(key, value, head, tail);
-                head.next = newNode;
-                tail.prev = newNode;
+                newNode = new Node(key, value, null, null);
+                currElementCount++;
             } else if (currElementCount < capacity) {
-                Node newNode;
                 if (map.containsKey(key)) {
                     map.get(key).value = value;
                     newNode = map.get(key);
-                    newNode.prev.next = newNode.next;
-                    newNode.next.prev = newNode.prev;
                 } else {
                     newNode = new Node(key, value, null, null);
                     currElementCount++;
                 }
-                head.next.prev = newNode;
-                newNode.next = head.next;
-                newNode.prev = head;
-                head.next = newNode;
             } else {
-                Node newNode;
                 if (map.containsKey(key)) {
+                    map.get(key).value = value;
                     newNode = map.get(key);
-                    newNode.value = value;
+                } else {
+                    newNode = new Node(key, value, null, null);
+                    removeTail();
                 }
             }
+            moveToHead(newNode);
+            map.put(key, newNode);
+        }
+
+        private void moveToHead(Node node) {
+            if (node.prev != null) {
+                node.prev.next = node.next;
+            }
+            if (node.next != null) {
+                node.next.prev = node.prev;
+            }
+            head.next.prev = node;
+            node.next = head.next;
+            node.prev = head;
+            head.next = node;
+        }
+
+        private void removeTail() {
+            Node tailNode = tail.prev;
+            if (tailNode == head) {
+                return;
+            }
+            tailNode.prev.next = tail;
+            tail.prev = tailNode.prev;
+            tailNode.prev = null;
+            tailNode.next = null;
+            map.remove(tailNode.key);
         }
     }
 
