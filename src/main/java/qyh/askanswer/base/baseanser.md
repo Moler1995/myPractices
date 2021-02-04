@@ -480,7 +480,35 @@ RowBounds时mybatis用于分页的对象，可以动态构造sql语句，效率�
 mybatis支持一对一和一对多查询，在mybatis配置文件中可以配置是否启用延迟加载，
 原理是使用cglib创建目标对象的代理对象，当调用目标方法时，进入拦截器方法，当查询到null值时，会单独发送关联的sql语句进行查询。
 ###13.6 说一下 mybatis 的一级缓存和二级缓存？
-
+mybatis一级缓存的作用域为一个sqlsession，二级缓存作用域时针对一个mapper。
+一级缓存：
+一次发起查询时，先从缓存中查询，如果没有则执行sql从数据库查询，查询后加入缓存
+当执行写操作时清空缓存，防止脏读。
+二级缓存
+基于mapper的namespace的缓存。
+当一次sqlsession使用完毕close时，会将查询到的数据存入二级缓存
+如果其他sqlsession对该表执行了写操作，会清空二级缓存
+###13.7 mybatis 和 hibernate 的区别有哪些？
+1. mybatis需要手动执行sql语句，hibernate不需要
+2. hibernate是全自动的ORM映射，而mybatis不是
+3. hibernate数据库移植性较高，mybatis针对不同的数据库需要书写不同的sql执行语句
+4. mybatis能比较方便地进行sql优化。
+###13.8 mybatis 有哪些执行器（Executor）？
+不会
+答案:
+1. SimpleExecutor: 每次执行update或select，就开启一个Statement对象，用完立刻关闭
+2. ReuseExecutor: 执行update或select，以sql为键查找Statement对象，存在就使用，不存在就创建，使用完后存放在map内
+3. BatchExecutor: 执行update时，将所有sql都添加到批处理中(addBatch)，等待统一执行(executeBatch)
+###13.9 mybatis 分页插件的实现原理是什么？
+自己：拦截器
+答案:
+###13.10 mybatis 如何编写一个自定义插件？
+不会
+#14 RabbitMQ
+#15 Kafka
+###15.1 kafka 可以脱离 zookeeper 单独使用吗？为什么？
+不能
+kafka集群使用zookeeper进行分布式管理
 #17 数据库
 ###17.1 数据库的三范式是什么？
 1NF: 表的每一列都是不可分割的
