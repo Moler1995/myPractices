@@ -40,7 +40,7 @@ contains，charAt，toCharArray，equals，toLowerCase，toUpperCase，replace�
 接口中的的方法不能有实现，但JDK8之后可以有默认简单实现用default修饰。
 抽象类可以包含普通方法
 一个普通类只能继承一个抽象类，但是可以对多个接口进行实现
-#1.15 java 中 IO 流分为几种？BIO，NIO，AIO
+###1.15 java 中 IO 流分为几种？BIO，NIO，AIO
 BIO:阻塞IO，在读取或者写入的时候会阻塞线程
 NIO:非阻塞IO，基于IO多路复用，利用selector监控读写事件，线程创建通道，然后注册到selector中就可以继续执行后面的逻辑，等到真正有读写数据时对通道进行读写操作。
 AIO:异步IO，不需要对通道进行注册，再有读写事件时会调用相应的处理方法。
@@ -132,7 +132,7 @@ notifyAll会将等待池中的所有线程移入锁池去竞争锁。
 ###3.9 线程的 run()和 start()有什么区别？
 线程的run方法只是一个普通方法，调用这个方法并不会启动新的线程
 start方法会调用start0本地方法，调用这个方法才会启动一个新的线程来执行run中的代码逻辑。
-###3，10 创建线程池有哪几种方式？
+###3.10 创建线程池有哪几种方式？
 ExecutorService: newFixedThreadPool，newCachedThreadPool，newScheduledThreadPool，newSingleThreadPool，newSingleThreadScheduledExecutor
 ###3.11 线程池都有哪些状态？
 Running:正常状态，等待新的任务提交执行
