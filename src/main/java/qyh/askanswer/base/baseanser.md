@@ -322,7 +322,7 @@ IOC Inversion of Control 控制反转，Spring中的IOC是指在服务启动时�
 <bean id="constructor" class="a.b.c.Constructor></bean>
 2. setter注入 property标签默认会根据name属性值拼接成set方法(对应set中的setCons(Constructor constructor)方法)，注入已经注入的constructor对象。
 <bean id="service" class="a.b.c.Service"><property name="cons" ref="constructor"></property></bean>
-<bean id="constructor" class="a.b.c.Constructor></bean>
+<bean id="constructor" class="a.b.c.Constructor"></bean>
 3. 注解注入
 @Controller @Component @Service...注册bean
 @Autowired @Resource
