@@ -134,6 +134,15 @@ notifyAll会将等待池中的所有线程移入锁池去竞争锁。
 start方法会调用start0本地方法，调用这个方法才会启动一个新的线程来执行run中的代码逻辑。
 ###3.10 创建线程池有哪几种方式？
 ExecutorService: newFixedThreadPool，newCachedThreadPool，newScheduledThreadPool，newSingleThreadPool，newSingleThreadScheduledExecutor
+###3.10.1 线程池创建类参数含义
+ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
+corePoolSize：核心线程数量
+maximumPoolSize：最大线程数量
+keepAliveTime：线程超过该空闲时间会退出
+unit：单位
+workQueue：工作队列
+threadFactory：线程工厂
+handler：可以定义拒绝策略
 ###3.11 线程池都有哪些状态？
 Running:正常状态，等待新的任务提交执行
 ShutDown:关闭状态，不接受新的任务提交，但是会继续执行已提交的任务
