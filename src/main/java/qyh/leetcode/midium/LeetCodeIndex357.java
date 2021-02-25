@@ -16,6 +16,9 @@ public class LeetCodeIndex357 {
         nums[0] = 0;
         nums[1] = 0;
         for (int i = 2; i <= n; i++) {
+            for (int j = i - 1; j > 1; j--) {
+                nums[i] += 10 * nums[j];
+            }
 
         }
         return 0;
