@@ -7,10 +7,26 @@ import java.util.Arrays;
  * 最长公共子串
  */
 public class LCS {
+    static class T {
+        volatile int i = 0;
+
+        void in(){
+            i++;
+        }
+    }
     public static void main(String[] args) {
-        char[] cs1 = {'a', 'b', 'd'};
-        char[] cs2 = {'a', 'b', 'd', 'c'};
-        System.out.println(lcs1(cs1, cs2));
+        T t = new T();
+        for (int i =0 ; i<10;i++){
+            new Thread(() -> {
+                for (int j = 0;j<1000;j++){
+                    t.in();
+                }
+            }).start();
+        }
+        while (Thread.activeCount() >1){
+            Thread.yield();
+        }
+        System.out.println(t.i);
     }
 
     public static int lcs(char[] cs1, char[] cs2) {

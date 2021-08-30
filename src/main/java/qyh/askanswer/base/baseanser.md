@@ -384,6 +384,27 @@ Controller处理完结果后生成ModelAndView交还DispatcherServlet，Dispatch
 创建方法或者类与url请求的映射关系，定义请求的方式，入参映射
 ###10.14 @Autowired 的作用是什么？
 实现bean自动装配
+###10.15 Spring bean生命周期
+1. bean实例化
+2. bean属性注入
+3. 查找并执行实现了Aware接口的类
+4. 执行BeanPostProcessor预初始化
+5. 查找并执行init-method
+6. 查找并执行自定义初始化方法
+7. 执行BeanPostProcessor初始化后方法
+8. 使用bean
+9. 调用destroy方法和自定义销毁方法销毁bean
+###10.16 Spring boot启动流程？
+1. 创建定时器stopWatch并启动
+2. 获取并运行listeners[SpringApplicationRunListeners]
+3. 打印banner
+4. 创建上下文ApplicationContext(判断是否webEnvironment加载AnnotationConfigApplicationContext或AnnotationConfigEmbeddedWebApplicationContext)
+5. 预处理上下文(context,listeners,args-ResourceLoader加载类)
+6. 刷新上下文（refresh添加后置处理器）
+7. 再刷新上下文（sort后置处理器排序）
+8. listeners发布finish（callFinishedListener）
+9. 定时器stopWatch停止计时
+10. 打印启动日志
 #11 Spring Boot/Spring Cloud
 ###11.1 什么是 spring boot？
 不会
